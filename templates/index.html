@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Perfomance Analyser</title>
+</head>
+
+
+
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Fjalla+One&display=swap");
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: url("{{ url_for('static', filename='img/alen_bg.jpg') }}") center center no-repeat;
+        background-size: cover;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .student-form {
+        background: #f8f4e5;
+        padding: 50px 100px;
+        border: 2px solid black;
+        box-shadow: 15px 15px 1px #ffa580, 15px 15px 1px 2px black;
+    }
+
+    input,
+    select {
+        display: block;
+        width: 100%;
+        font-size: 14pt;
+        line-height: 28pt;
+        font-family: "Fjalla One";
+        margin-bottom: 28pt;
+        border: none;
+        border-bottom: 5px solid black;
+        background: #f8f4e5;
+        min-width: 250px;
+        padding-left: 5px;
+        outline: none;
+        color: black;
+    }
+
+    input:focus {
+        border-bottom: 5px solid #ffa580;
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
+        line-height: 28pt;
+        padding: 0 20px;
+        background: #ffa580;
+        letter-spacing: 2px;
+        transition: 0.2s all ease-in-out;
+        outline: none;
+        border: 1px solid black;
+        box-shadow: 3px 3px 1px 1px #95a4ff, 3px 3px 1px 2px black;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: black;
+        color: white;
+        border: 1px solid black;
+    }
+
+    ::selection {
+        background: #ffc8ff;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        border-bottom: 5px solid #95a4ff;
+        -webkit-text-fill-color: #2A293E;
+        -webkit-box-shadow: 0 0 0px 1000px #f8f4e5 inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .result-message {
+        text-align: center;
+        margin-bottom: 4%;
+        font-weight: bold;
+    }
+
+    .text-success {
+        color: #198754;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+</style>
+
+<body>
+
+
+    <div class="student-form">
+        <h4 class="result-message text-success" id="response_msg"></h4>
+
+        <form action="predict" id="form" name="form" method="post">
+            <select name="gender" id="gender">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+
+            <input name="s1" placeholder="S1 Mark" type="text" onkeypress="return Val_Func(this, event)" />
+            <input name="s2" placeholder="S2 Mark" type="text" onkeypress="return Val_Func(this, event)" />
+            <input name="s3" placeholder="S3 Mark" type="text" onkeypress="return Val_Func(this, event)" />
+
+            <input name="session1" placeholder="Session1 Mark" type="text" onkeypress="return Val_Func(this, event)" />
+            <input name="session2" placeholder="Session2 Mark" type="text" onkeypress="return Val_Func(this, event)" />
+
+            <input name="overall" placeholder="Overall Mark" type="text" onkeypress="return Val_Func(this, event)" />
+
+            <button type="submit" id="predict">Analyze </button>
+        </form>
+    </div>
+
+
+    <script>
+
+
+
+        const form = document.getElementById('form');
+        const response_msg = document.getElementById('response_msg');
+        const predict_btn = document.getElementById('predict');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            response_msg.innerText = '';
+            predict_btn.style.display = 'none';
+            await uploadData(e.target);
+            predict_btn.style.display = 'block';
+
+
+        });
+
+        async function uploadData(target) {
+            const response = await fetch(target.action, {
+                method: "POST",
+                body: new FormData(target)
+            });
+
+            if (!response.ok) {
+                alert('Something went wrong,Please try again');
+                return;
+            }
+
+            const fetch_response = await response.json();
+
+            response_msg.innerText = fetch_response.status_msg;
+
+
+
+        }
+
+        function isValid(el, evnt) {
+            var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+            if (charC == 46) {
+                if (el.value.indexOf('.') === -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (charC > 31 && (charC < 48 || charC > 57))
+                    return false;
+            }
+            return true;
+        }
+
+        function Val_Func(t, evnt) {
+            var status = isValid(t, evnt);
+            return status;
+        }
+    </script>
+
+</body>
+
+</html>
