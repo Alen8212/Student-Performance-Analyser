@@ -129,9 +129,14 @@
         </form>
     </div>
 
+    
+    <!--<script src= {{ url_for('static', filename='js/jquery-3.6.1.js') }} type="javascript"></script>
+    <script src= {{ url_for('static', filename='js/sweetalert2@11.js') }} type="javascript"></script>-->
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
-
+        
 
 
         const form = document.getElementById('form');
@@ -162,7 +167,18 @@
 
             const fetch_response = await response.json();
 
-            response_msg.innerText = fetch_response.status_msg;
+            const response_msg = fetch_response.status_msg;
+
+            if (response_msg=="Student may Fail !!!")
+                Swal.fire({
+                    icon: 'error',
+                    title: response_msg
+                })
+            else
+                Swal.fire({
+                    icon: 'success',
+                    title: response_msg
+                })
 
 
 
