@@ -18,16 +18,21 @@ def home():
 
 
 
-
+def isfloat(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
 @app.route("/predict", methods = ["POST"])
 def predict():
     float_features = []
     for x in request.form.values():
-        if not x.isnumeric():
+        if not isfloat(x):
             response = {"status" : 500,"status_msg": "Some fields are empty !"}
             return jsonify(response)
 
-        float_features.append(int(x))
+        float_features.append(float(x))
 
 
     final = [np.array(float_features)]
