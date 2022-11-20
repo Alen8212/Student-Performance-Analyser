@@ -119,12 +119,12 @@ h1{
                 <option value="1">Female</option>
             </select>
 
-            <input name="s1" class="text-element" placeholder="S1 Mark" type="text" onkeypress="return Val_Func(this, event)" min="0" max="10"  />
-            <input name="s2" class="text-element" placeholder="S2 Mark" type="text" onkeypress="return Val_Func(this, event)" min="0" max="10"/>
-            <input name="s3" class="text-element" placeholder="S3 Mark" type="text" onkeypress="return Val_Func(this, event)" min="0" max="10"/>
+            <input name="s1" class="text-element" placeholder="S1 Mark" type="number" min="0.00" max="10.00" step="0.01" onkeypress="return Val_Func(this, event)"  required />
+            <input name="s2" class="text-element" placeholder="S2 Mark" type="number" min="0.00" max="10.00" step="0.01" onkeypress="return Val_Func(this, event)"  required/>
+            <input name="s3" class="text-element" placeholder="S3 Mark" type="number" min="0.00" max="10.00" step="0.01" onkeypress="return Val_Func(this, event)"  required/>
 
-            <input name="session1" class="text-element" placeholder="Session1 Mark" type="text" onkeypress="return Val_Func(this, event)" min="0" max="10"/>
-            <input name="session2" class="text-element" placeholder="Session2 Mark" type="text" onkeypress="return Val_Func(this, event)" min="0" max="10"/>
+            <input name="session1" class="text-element" placeholder="Session1 Mark" type="number" min="0.00" max="10.00" step="0.01" onkeypress="return Val_Func(this, event)"  required/>
+            <input name="session2" class="text-element" placeholder="Session2 Mark"type="number" min="0.00" max="10.00" step="0.01" onkeypress="return Val_Func(this, event)"  required/>
 
             <input name="overall" id="overall" placeholder="Overall Mark" type="text" onkeypress="return Val_Func(this, event)" readonly />
 
